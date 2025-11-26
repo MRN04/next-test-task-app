@@ -71,8 +71,8 @@ export function SideBar() {
             <User2 className="h-4 w-4 text-gray-600" />
           </div>
           <div className="flex flex-col">
-            <span className="text-xs font-medium">{user?.username ?? "New User"}</span>
-            <span className="text-[10px] text-gray-text">
+            <span className="text-sm md:text-xs font-medium">{user?.username ?? "New User"}</span>
+            <span className="text-xs md:text-[10px] text-gray-text">
               {user?.email ?? "newuser@example.com"}
             </span>
           </div>

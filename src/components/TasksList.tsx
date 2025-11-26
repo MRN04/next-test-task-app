@@ -41,7 +41,7 @@ export const TasksList = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(4,260px)] gap-6 max-w-fit overflow-x-auto pb-4 h-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(4,260px)] gap-6 overflow-x-auto pb-4 h-full">
       {STATUS_ORDER.map((status: TaskStatus) => {
         const tasks = groupedTasks[status] || [];
 
