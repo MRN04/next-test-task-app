@@ -12,7 +12,7 @@ import { LayoutDashboard, Settings, User2 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { User } from "@/lib/types";
+import { User } from "@/services/types";
 
 const sidebarItems = [
   {
