@@ -41,7 +41,7 @@ export function SideBar() {
   }, [pathname]);
   
   return (
-    <Sidebar className="border-none flex gap-10 pt-[55px] pb-[37px] pl-[28px]">
+    <Sidebar className="border-none flex gap-10 pt-[55px] pb-[37px] pl-[28px] static">
       <SidebarHeader className="p-0">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-400">

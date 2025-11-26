@@ -8,6 +8,8 @@ export type Task = {
   createdAt: string;
   title: string;
   description: string;
-  status: string;
+  status: TaskStatus;
   id: string;
 };
+
+export type TaskStatus = 'to-do' | 'in-progress' | 'review' | 'completed';
