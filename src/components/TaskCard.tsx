@@ -3,7 +3,7 @@ import { ClockIcon, MoreHorizontalIcon } from "lucide-react";
 
 export const TaskCard = ({ task }: { task: Task }) => {
     return (
-        <div className="bg-white rounded-lg pt-4.5 px-4 pb-6 flex flex-col gap-3 hover:shadow-md transition-shadow border border-gray-100">
+        <div className="bg-white rounded-lg pt-4.5 px-4 pb-6 flex flex-col gap-3 hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between">
                 <h3 className="font-medium text-dark-text line-clamp-2">
                     {task.title}

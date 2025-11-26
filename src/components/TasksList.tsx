@@ -65,6 +65,7 @@ export const TasksList = () => {
                   <TaskCard key={task.id} task={task} />
                 ))
               )}
+              <div className="w-[260px] h-[160px] border-2 border-dashed border-gray-text/40 rounded-lg"></div>
             </div>
           </div>
         );
