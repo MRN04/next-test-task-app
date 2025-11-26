@@ -75,6 +75,7 @@ export function SettingsSideBar() {
       <Button
         onClick={handleLogout}
         className="w-full h-11 bg-red-500 hover:bg-red-600 text-white"
+        disabled={!user?.username || !user?.email || !user?.password}
       >
         Logout
       </Button>

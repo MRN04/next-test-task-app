@@ -5,11 +5,10 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { LayoutDashboard, Settings, User2 } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { User } from "@/services/types";
@@ -30,7 +29,6 @@ const sidebarItems = [
 export function SideBar() {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
-  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   
   useEffect(() => {
@@ -53,15 +51,14 @@ export function SideBar() {
 
       <SidebarContent className="p-0">
         {sidebarItems.map((item) => (
-          <SidebarMenuItem key={item.href}>
-            <SidebarMenuButton 
-              className={cn("w-full justify-start gap-3 text-gray-text hover:text-gray-text active:text-primary-green", isActive(item.href) && "text-primary-green hover:text-primary-green")}
-              onClick={() => router.push(item.href)}
-            >
-              <item.icon className="h-4 w-4" />
-              <span>{item.label}</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn("w-full flex items-center justify-start gap-3 text-gray-text hover:text-gray-text active:text-primary-green", isActive(item.href) && "text-primary-green hover:text-primary-green")}
+          >
+            <item.icon className="h-4 w-4" />
+            <span>{item.label}</span>
+          </Link>
         ))}
       </SidebarContent>
 
