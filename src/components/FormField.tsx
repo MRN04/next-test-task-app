@@ -33,6 +33,7 @@ export const FormField = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         aria-invalid={!!error}
+        className="h-[56px] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary-green"
       />
       {error ? (
         <p className="text-xs text-destructive">{error}</p>
