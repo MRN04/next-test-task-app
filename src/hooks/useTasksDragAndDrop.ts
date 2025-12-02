@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Task, TaskStatus } from "@/services/types";
 
-export const useDragAndDrop = (initialTasks: Task[]) => {
+export const useTasksDragAndDrop = (initialTasks: Task[]) => {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [draggedTask, setDraggedTask] = useState<Task | null>(null);
   const [dragOverColumn, setDragOverColumn] = useState<TaskStatus | null>(null);
+
+  useEffect(() => {
+    setTasks(initialTasks);
+  }, [initialTasks]);
 
   const handleDragStart = (task: Task) => {
     setDraggedTask(task);
@@ -46,7 +50,6 @@ export const useDragAndDrop = (initialTasks: Task[]) => {
 
   return {
     tasks,
-    setTasks,
     draggedTask,
     dragOverColumn,
     handleDragStart,

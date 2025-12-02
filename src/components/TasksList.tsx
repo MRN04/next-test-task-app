@@ -3,16 +3,21 @@
 import { useGetTasks } from "@/services/queries";
 import { Skeleton } from "./ui/skeleton";
 import { Task, TaskStatus } from "@/services/types";
-import { useMemo, useEffect } from "react";
 import { STATUS_ORDER } from "@/lib/constants";
 import { TaskColumn } from "./TaskColumn";
-import { useDragAndDrop } from "@/hooks/useDragAndDrop";
+import { useTasksDragAndDrop } from "@/hooks/useTasksDragAndDrop";
+import { useMemo } from "react";
 
 export const TasksList = () => {
   const { data, isLoading, error } = useGetTasks();
+
+  const flattenedTasks = useMemo(
+    () => (data ? Object.values(data).flat() : []),
+    [data]
+  );
+
   const {
     tasks,
-    setTasks,
     draggedTask,
     dragOverColumn,
     handleDragStart,
@@ -20,26 +25,7 @@ export const TasksList = () => {
     handleDragOver,
     handleDragLeave,
     handleDrop,
-  } = useDragAndDrop([]);
-
-  useEffect(() => {
-    if (data) {
-      setTasks(data);
-    }
-  }, [data, setTasks]);
-
-  const groupedTasks = useMemo(() => {
-    if (!tasks.length) return {};
-
-    return tasks.reduce((acc: Record<string, Task[]>, task: Task) => {
-      const status = task.status;
-      if (!acc[status]) {
-        acc[status] = [];
-      }
-      acc[status].push(task);
-      return acc;
-    }, {});
-  }, [tasks]);
+  } = useTasksDragAndDrop(flattenedTasks);
 
   if (isLoading) {
     return <LoadingSkeleton />;
@@ -55,7 +41,7 @@ export const TasksList = () => {
         <TaskColumn
           key={status}
           status={status}
-          tasks={groupedTasks[status] || []}
+          tasks={tasks.filter((task: Task) => task.status === status) || []}
           draggedTaskId={draggedTask?.id || null}
           isDragOver={dragOverColumn === status}
           onDragStart={handleDragStart}

@@ -1,8 +1,7 @@
+import { getFormattedDate } from "@/lib/utils";
+
 export const PageHeader = ({ title }: { title: string }) => {
-  const day = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  const month = new Date().toLocaleDateString('en-US', { month: 'long' });
-  const year = new Date().getFullYear();
-  const date = new Date().toLocaleDateString('en-US', { day: '2-digit' });
+  const { day, month, year, date } = getFormattedDate();
 
   return (
     <div className="flex flex-col gap-1">

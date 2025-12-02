@@ -1,48 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { User } from "@/services/types";
+import { useMemo } from "react";
+import { useUser } from "@/hooks/useUser";
+import { calculateProfileCompletion, getInitials } from "@/lib/utils";
 import { Button } from "./ui/button";
 
 export function SettingsSideBar() {
-  const [user, setUser] = useState<User | null>(null);
-  const [profileCompletion, setProfileCompletion] = useState<number>(0);
+  const { user, logout } = useUser();
 
-  const calculateProfileCompletion = (user: User | null) => {
+  const profileCompletion = useMemo(() => {
     if (!user) return 0;
-    
-    const fields = [
-      user.username,
-      user.email,
-      user.password,
-    ];
-    
-    const filledFields = fields.filter(field => field && field.trim() !== '').length;
-    return Math.round((filledFields / fields.length) * 100);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    document.location.reload();
-  };
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const profileCompletion = calculateProfileCompletion(storedUser ? JSON.parse(storedUser) : null);
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setProfileCompletion(profileCompletion);
-    }
-  }, []);
-
-  const getInitials = (username: string) => {
-    return username
-      .split(" ")
-      .map((word) => word[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
+    return calculateProfileCompletion([user.username, user.email, user.password]);
+  }, [user]);
 
   return (
     <div className="w-full max-w-[312px] bg-white border-l border-gray-100 hidden lg:flex flex-col justify-between pt-10 px-5 pb-6 h-full">
@@ -50,7 +19,9 @@ export function SettingsSideBar() {
         <div className="flex flex-col gap-1">
           <h2 className="text-xl font-medium text-dark-text">My Profile</h2>
           <p className="text-sm text-primary-green cursor-pointer hover:underline">
-            {profileCompletion === 0 ? "not completed your profile" : `${profileCompletion}% completed your profile`}
+            {profileCompletion === 0
+              ? "not completed your profile"
+              : `${profileCompletion}% completed your profile`}
           </p>
         </div>
 
@@ -73,7 +44,7 @@ export function SettingsSideBar() {
       </div>
 
       <Button
-        onClick={handleLogout}
+        onClick={logout}
         className="w-full h-11 bg-red-500 hover:bg-red-600 text-white"
         disabled={!user?.username || !user?.email || !user?.password}
       >
